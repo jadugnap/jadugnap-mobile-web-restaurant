@@ -2,6 +2,46 @@ let restaurant;
 var newMap;
 
 /**
+ * Register sw.
+ */
+navigator.serviceWorker.register('/sw.js').then(function(reg) {
+  console.log('Sw successfully registered.');
+
+  if (!navigator.serviceWorker.controller) {
+    return;
+  }
+
+  if (reg.waiting) {
+    navigator.serviceWorker.controller.postMessage({action: 'skipWaiting'});
+  }
+
+  if (reg.installing) {
+    navigator.serviceWorker.addEventListener('statechange', function() {
+      if (navigator.serviceWorker.controller.state == 'installed') {
+        navigator.serviceWorker.controller.postMessage({action: 'skipWaiting'});
+      }
+    });
+  }
+
+  reg.addEventListener('updatefound', function() {
+    navigator.serviceWorker.addEventListener('statechange', function() {
+      if (navigator.serviceWorker.controller.state == 'installed') {
+        navigator.serviceWorker.controller.postMessage({action: 'skipWaiting'});
+      }
+    });
+  });
+}).catch(function() {
+  console.log('Sw failed.');
+});
+
+var refreshing;
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+  if (refreshing) return;
+  window.location.reload();
+  refreshing = true;
+})
+
+/**
  * Initialize map as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {  
@@ -16,6 +56,8 @@ initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {      
+      // move fillBreadcrumb() before initMap()
+      fillBreadcrumb();
       self.newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
         zoom: 16,
@@ -29,7 +71,8 @@ initMap = () => {
           'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox.streets'    
       }).addTo(newMap);
-      fillBreadcrumb();
+      // move fillBreadcrumb() before initMap()
+      // fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
   });
