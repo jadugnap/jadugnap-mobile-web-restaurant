@@ -167,6 +167,10 @@ createReviewHTML = (review) => {
   comments.innerHTML = review.comments;
   li.appendChild(comments);
 
+  // making each review item focusable
+  li.tabIndex = '0';
+  // making each review item focusable
+
   return li;
 }
 
