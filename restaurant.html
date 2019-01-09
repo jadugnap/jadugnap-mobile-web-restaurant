@@ -21,7 +21,7 @@
     </nav>
     <a href="#restaurant-name" class="skip-link">Skip map & to contents</a>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" >
+    <ul id="breadcrumb" aria-label="Breadcrumb">
       <li><a href="/">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
@@ -36,13 +36,15 @@
       <!--  -->
     </section>
     <section id="map-container">
-      <div id="map"></div>
+      <!-- add aria-hidden and role -->
+      <div id="map" role="application" aria-hidden="true"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="side-container">
       <section id="restaurant-container">
-        <h1 id="restaurant-name" tabindex="0"></h1>
+        <!-- edit restaurant's name as heading-2, instead of heading-1 -->
+        <h2 id="restaurant-name" tabindex="0"></h2>
         <img id="restaurant-img">
         <p id="restaurant-cuisine" tabindex="0"></p>
         <p id="restaurant-address" tabindex="0"></p>

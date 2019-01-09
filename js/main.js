@@ -210,7 +210,8 @@ createRestaurantHTML = (restaurant) => {
   // alt text for main page
   li.append(image);
 
-  const name = document.createElement('h1');
+  // edit restaurant's name as heading-2, instead of heading-1
+  const name = document.createElement('h2');
   //remove "View Details", set name as the link instead for accessibility.
   const name_link = document.createElement('a');
   name_link.innerHTML = restaurant.name;
