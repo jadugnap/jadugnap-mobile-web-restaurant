@@ -33,11 +33,13 @@ ul, li {
 	color: #333;
 }
 a {
-	color: #3397DB;
+  /* color: #3397DB; */
+  /* improve contrast */
+  color: #01447e;
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: #3397db;
+	color: #01447e;
 	text-decoration: none;
 }
 a img{
