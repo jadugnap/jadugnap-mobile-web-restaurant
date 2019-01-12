@@ -56,7 +56,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   display: flex;
   flex-wrap: wrap;
 }
-#maincontent section {
+#index #maincontent section {
   width: 100vw;
 }
 #footer {
