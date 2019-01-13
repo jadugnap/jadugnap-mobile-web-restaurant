@@ -28,6 +28,19 @@ class DBHelper {
     });
   }
 
+  /**
+   * Load restaurants from IDB before network fetch
+   */
+  static idbLoadRestaurants(callback) {
+    this.openDatabase.then(db => {
+      if (!db) callback(null, null);
+      const tx = db.transaction('restoStore');
+      const store = tx.objectStore('restoStore');
+      store.getAll().then(results => {
+        callback(null, results);
+      });
+    });
+  }
 
   /**
    * Fetch all restaurants.
