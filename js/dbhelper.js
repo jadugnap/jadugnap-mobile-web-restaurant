@@ -15,6 +15,21 @@ class DBHelper {
   }
 
   /**
+   * openDatabase IDB
+   */
+  static get openDatabase() {
+    // If there is service worker support, there is no database
+    if (!navigator.serviceWorker) {
+      return Promise.resolve();
+    }
+
+    return idb.openDb('restoDb', 1, function(upgradeDb) {
+      upgradeDb.createObjectStore('restoStore', {keyPath: 'id'});
+    });
+  }
+
+
+  /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
@@ -25,6 +40,18 @@ class DBHelper {
         const json = JSON.parse(xhr.responseText);
         const restaurants = json;
         // const restaurants = json.restaurants;
+
+        // Database 'restoDb' with store 'restoStore' has been created
+        // putting 'restaurants' into 'restoStore'
+        this.openDatabase.then(db => {
+          if (!db) return;
+          const tx = db.transaction('restoStore','readwrite');
+          const store = tx.objectStore('restoStore');
+          restaurants.forEach(restaurant => {
+            store.put(restaurant);
+          })
+        });
+
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
