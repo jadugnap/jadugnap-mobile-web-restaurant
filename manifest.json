@@ -1,0 +1,26 @@
+{
+    "name": "Restaurants Review",
+    "short_name": "Resto",
+    "start_url": "/index.html?hs=true",
+    "icons": [
+      {
+        "src": "img/icons/48x48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      },
+      {
+        "src": "img/icons/144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },
+      {
+        "src": "img/icons/512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "background_color": "#f3f3f3",
+    "theme_color": "#3397DB",
+    "display": "fullscreen"
+  }
+  
